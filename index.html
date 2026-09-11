@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neurodivergenz-Selbsttest</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --ink: #163A63;
+    --blue: #1F5F9B;
+    --petrol: #2D8FB4;
+    --sage: #6EBF7A;
+    --green: #8CCF5A;
+    --mint: #4EB89C;
+
+    --bg: #F5F6F6;
+    --surface: #FFFFFF;
+    --surface-alt: #E7EDF4;
+    --text: #163A63;
+    --text-muted: #4A5A6E;
+    --text-on-accent: #FFFFFF;
+    --border: #D7DEE7;
+    --border-strong: #163A63;
+    --focus-ring: #2D8FB4;
+    --track: #E7EDF4;
+
+    --shadow-sm: 0 1px 2px rgba(22, 58, 99, 0.08);
+    --shadow-md: 0 8px 24px rgba(22, 58, 99, 0.10);
+    --shadow-lg: 0 20px 48px rgba(22, 58, 99, 0.16);
+
+    --font-head: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B2038;
+      --surface: #123256;
+      --surface-alt: #17416f;
+      --text: #F5F6F6;
+      --text-muted: #B9C6D6;
+      --border: #23496f;
+      --border-strong: #6E9CC9;
+      --track: #0B2038;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B2038;
+    --surface: #123256;
+    --surface-alt: #17416f;
+    --text: #F5F6F6;
+    --text-muted: #B9C6D6;
+    --border: #23496f;
+    --border-strong: #6E9CC9;
+    --track: #0B2038;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { background: var(--bg); }
+
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-body);
+    display: flex;
+    justify-content: center;
+    padding: clamp(20px, 5vw, 56px) 18px 64px;
+  }
+
+  main {
+    width: 100%;
+    max-width: 620px;
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .wordmark-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--blue), var(--mint));
+    flex-shrink: 0;
+  }
+  .wordmark-text {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    line-height: 1.15;
+  }
+  .wordmark-sub {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  section.screen[hidden] { display: none; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    padding: clamp(24px, 5vw, 40px);
+  }
+
+  .eyebrow {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--petrol);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 4.2vw, 2.15rem);
+    line-height: 1.14;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+
+  p.lede {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 22px;
+  }
+
+  .mode-switch {
+    display: inline-flex;
+    background: var(--surface-alt);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 24px;
+    gap: 2px;
+  }
+  .mode-switch button {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.82rem;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    padding: 9px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .mode-switch button.active {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .mode-switch button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+  .disclaimer {
+    display: flex;
+    gap: 12px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--petrol);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 0 0 24px;
+  }
+  .disclaimer .icon { font-size: 1.1rem; line-height: 1.4; flex-shrink: 0; }
+  .disclaimer p {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .disclaimer strong { color: var(--text); }
+
+  .trust {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 26px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-family: var(--font-head);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .meta-row span.dot {
+    width: 4px; height: 4px; border-radius: 50%; background: var(--border-strong); opacity: .5;
+  }
+
+  .btn {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.98rem;
+    border: none;
+    border-radius: 14px;
+    padding: 15px 26px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+  }
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary:hover { box-shadow: var(--shadow-md); }
+  .btn-primary:active { transform: translateY(1px); }
+  .btn-primary:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    width: auto;
+    padding: 10px 18px;
+    font-size: 0.86rem;
+  }
+  .btn-ghost:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+  .progress-wrap { margin-bottom: 26px; }
+  .progress-track {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--track);
+    overflow: hidden;
+  }
+  .progress-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--green);
+    width: 0%;
+    transition: width 260ms ease;
+  }
+  .progress-label {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    letter-spacing: 0.03em;
+  }
+
+  .question-num {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 2.6rem;
+    color: var(--surface-alt);
+    line-height: 1;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  h2.question {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 3.4vw, 1.4rem);
+    line-height: 1.4;
+    color: var(--text);
+    margin: 0 0 26px;
+    text-wrap: balance;
+  }
+
+  .answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .answer {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.94rem;
+    text-align: left;
+    color: var(--text);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 120ms ease, background 120ms ease;
+  }
+  .answer .dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 1.5px solid var(--border-strong);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .answer:hover { border-color: var(--petrol); }
+  .answer:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+  .answer.selected {
+    border-color: var(--blue);
+    background: var(--surface-alt);
+  }
+  .answer.selected .dot { border-color: var(--blue); background: var(--blue); }
+  .answer.selected .dot::after {
+    content: "";
+    position: absolute; inset: 3px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; }
+
+  .band-badge {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .band-low { background: #EAF6DD; color: #3F7A2E; }
+  .band-mid { background: #E4F4EF; color: #1F6B58; }
+  .band-high { background: #E7EDF4; color: var(--blue); }
+
+  .chart { margin: 28px 0 8px; display: flex; flex-direction: column; gap: 16px; }
+  .bar-row { display: grid; grid-template-columns: 132px 1fr 46px; align-items: center; gap: 12px; }
+  .bar-label {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+  .bar-track {
+    display: block;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--track);
+    overflow: hidden;
+  }
+  .bar-fill {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    min-width: 0;
+    border-radius: 999px;
+    width: 0%;
+    padding-right: 8px;
+    transition: width 700ms cubic-bezier(.2,.8,.2,1), min-width 700ms cubic-bezier(.2,.8,.2,1);
+  }
+  .bar-pct {
+    color: #fff;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 0.66rem;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .bar-value {
+    font-family: var(--font-head);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-align: right;
+  }
+  .chart-axis {
+    display: grid;
+    grid-template-columns: 132px 1fr 46px;
+    gap: 12px;
+    margin-top: 2px;
+  }
+  .chart-axis .ticks {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-head);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+  }
+
+  .cta-box {
+    margin-top: 28px;
+    background: var(--surface-alt);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .cta-box .eyebrow { color: var(--blue); }
+  .cta-box h3 {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin: 0 0 6px;
+  }
+  .cta-box p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0 0 16px;
+  }
+
+  .restart-row { text-align: center; margin-top: 22px; }
+  .restart-row button {
+    background: none; border: none; color: var(--text-muted);
+    font-family: var(--font-body); font-size: 0.85rem;
+    text-decoration: underline; cursor: pointer;
+  }
+
+  footer.legal {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <div class="wordmark">
+    <div class="wordmark-mark" aria-hidden="true"></div>
+    <div>
+      <div class="wordmark-text">INSTITUT FÜR NEUROKOMPETENZ</div>
+      <div class="wordmark-sub">Neurodivergenz-Selbsttest</div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="screen" id="screen-intro">
+    <div class="card">
+      <p class="eyebrow" id="intro-eyebrow">Orientierungstest &middot; ADHS &middot; Autismus-Spektrum &middot; Hochbegabung</p>
+      <h1 id="intro-headline">Fällt dein Kind ins neurodivergente Spektrum?</h1>
+
+      <div class="mode-switch" role="group" aria-label="Version wählen">
+        <button type="button" id="mode-eltern" class="active">Für Eltern</button>
+        <button type="button" id="mode-fach">Für Fachkräfte</button>
+      </div>
+
+      <p class="lede" id="intro-lede"></p>
+
+      <div class="disclaimer">
+        <span class="icon">&#9432;</span>
+        <p><strong>Wichtig zu wissen:</strong> Dieser Test ist keine Diagnose. Er ersetzt keine ärztliche, psychologische oder sonderpädagogische Abklärung und kann eine solche auch nicht vorwegnehmen. Er beruht auf typischen Beobachtungen aus unserer fachlichen Arbeit, nicht auf einem klinischen Diagnoseverfahren.</p>
+      </div>
+
+      <div class="meta-row">
+        <span>18 Fragen</span>
+        <span class="dot"></span>
+        <span>ca. 5 Minuten</span>
+        <span class="dot"></span>
+        <span>kostenfrei</span>
+      </div>
+
+      <button class="btn btn-primary" id="start-btn">Test jetzt starten</button>
+
+      <p class="trust">In den letzten Jahren sind sehr viele besorgte Eltern und Fachkräfte zu uns gekommen, die teilweise ein Jahr auf einen Diagnostiktermin warten mussten. Dieser Test hilft dir, dich in der Zwischenzeit fundiert einzuordnen, entwickelt aus der fachlichen Arbeit des Instituts für Neurokompetenz.</p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="screen" id="screen-quiz" hidden>
+    <div class="card">
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="progress-label" id="progress-label">Frage 1 von 18</div>
+      </div>
+
+      <div class="question-num" id="question-num">01</div>
+      <h2 class="question" id="question-text"></h2>
+
+      <div class="answers" id="answers"></div>
+
+      <div class="quiz-nav">
+        <button class="btn-ghost" id="back-btn">Zurück</button>
+        <span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="screen" id="screen-result" hidden>
+    <div class="card">
+      <span class="band-badge" id="band-badge">Ergebnis</span>
+      <h1 id="result-headline">Dein Ergebnis</h1>
+      <p class="lede" id="result-text"></p>
+
+      <div class="chart" id="chart"></div>
+      <div class="chart-axis">
+        <span></span>
+        <span class="ticks"><span>0</span><span>12</span><span>24</span></span>
+        <span></span>
+      </div>
+
+      <div class="disclaimer" style="margin-top:26px;">
+        <span class="icon">&#9432;</span>
+        <p id="result-disclaimer"></p>
+      </div>
+
+      <div class="cta-box">
+        <p class="eyebrow">Kostenfreier Infoabend</p>
+        <h3>Sonntag, 13.9. &middot; 20 Uhr &middot; Online</h3>
+        <p id="cta-text">Erfahre, wie du Hochbegabung, ADHS und Autismus-Spektrum erkennst und neurokompetent begleitest.</p>
+        <button class="btn btn-primary" onclick="window.open('https://neurokompetenz.org', '_blank')">Zum Infoabend anmelden</button>
+      </div>
+
+      <div class="restart-row">
+        <button id="restart-btn">Test erneut starten</button>
+      </div>
+    </div>
+    <footer class="legal">Institut für Neurokompetenz &middot; neurokompetenz.org &middot; Dieser Test ersetzt keine medizinische oder psychologische Diagnostik.</footer>
+  </section>
+</main>
+
+<script>
+(function () {
+  var QUESTIONS = [
+    { domain: 'adhs', eltern: 'Auch wenn du deinem Kind mehrere Schritte hintereinander sagst (zum Beispiel "erst aufräumen, dann anziehen, dann Zähne putzen"), bleibt oft nur der erste Schritt hängen.', fach: 'Auch wenn du dem Kind, das du begleitest, mehrere Schritte hintereinander sagst (zum Beispiel "erst aufräumen, dann anziehen, dann Zähne putzen"), bleibt oft nur der erste Schritt hängen.' },
+    { domain: 'adhs', eltern: 'Bei Themen, die es wirklich interessieren, kann sich dein Kind stundenlang vertiefen, bei ungeliebten Aufgaben hält es kaum wenige Minuten durch.', fach: 'Bei Themen, die es wirklich interessieren, kann sich das Kind stundenlang vertiefen, bei ungeliebten Aufgaben hält es kaum wenige Minuten durch.' },
+    { domain: 'adhs', eltern: 'Dein Kind platzt oft mit Antworten heraus, bevor die Frage zu Ende gestellt ist, oder es fällt ihm schwer zu warten, bis es an der Reihe ist.', fach: 'Das Kind platzt oft mit Antworten heraus, bevor die Frage zu Ende gestellt ist, oder es fällt ihm schwer zu warten, bis es an der Reihe ist.' },
+    { domain: 'adhs', eltern: 'Kleine Anlässe, zum Beispiel ein umgefallener Bauklötzeturm, können bei deinem Kind überraschend heftige Gefühlsausbrüche auslösen.', fach: 'Kleine Anlässe, zum Beispiel ein umgefallener Bauklötzeturm, können bei dem Kind überraschend heftige Gefühlsausbrüche auslösen.' },
+    { domain: 'adhs', eltern: 'Plötzliche Wechsel, zum Beispiel vom Spielen zum Aufbruch, sind für dein Kind besonders schwer, eine kurze Vorwarnung hilft spürbar.', fach: 'Plötzliche Wechsel, zum Beispiel vom Spielen zum Aufbruch, sind für das Kind besonders schwer, eine kurze Vorwarnung hilft spürbar.' },
+    { domain: 'adhs', eltern: 'Dein Kind wirkt oft gedanklich abwesend oder verträumt, stört dabei aber kaum und fällt deshalb im Alltag wenig auf.', fach: 'Das Kind wirkt oft gedanklich abwesend oder verträumt, stört dabei aber kaum und fällt deshalb im Alltag wenig auf.' },
+
+    { domain: 'ass', eltern: 'Sprichwörter, Redewendungen oder ironische Bemerkungen versteht dein Kind eher wörtlich als im übertragenen Sinn.', fach: 'Sprichwörter, Redewendungen oder ironische Bemerkungen versteht das Kind eher wörtlich als im übertragenen Sinn.' },
+    { domain: 'ass', eltern: 'Unangekündigte Veränderungen im Tagesablauf bringen dein Kind spürbar aus dem Gleichgewicht.', fach: 'Unangekündigte Veränderungen im Tagesablauf bringen das Kind spürbar aus dem Gleichgewicht.' },
+    { domain: 'ass', eltern: 'Nach einem Kita- oder Schultag, an dem scheinbar alles gut gelaufen ist, wirkt dein Kind zu Hause danach plötzlich erschöpft oder überfordert.', fach: 'Nach einem Kita- oder Schultag, an dem scheinbar alles gut gelaufen ist, wirkt das Kind danach plötzlich erschöpft oder überfordert.' },
+    { domain: 'ass', eltern: 'Bestimmte Geräusche, Lichtverhältnisse, Stoffe oder Gerüche empfindet dein Kind deutlich intensiver als andere Kinder, im positiven wie im negativen Sinn.', fach: 'Bestimmte Geräusche, Lichtverhältnisse, Stoffe oder Gerüche empfindet das Kind deutlich intensiver als andere Kinder, im positiven wie im negativen Sinn.' },
+    { domain: 'ass', eltern: 'Dein Kind hat wiederkehrende Bewegungen oder feste Abläufe, zum Beispiel Wippen, Sortieren oder Rituale, die es sichtlich beruhigen.', fach: 'Das Kind hat wiederkehrende Bewegungen oder feste Abläufe, zum Beispiel Wippen, Sortieren oder Rituale, die es sichtlich beruhigen.' },
+    { domain: 'ass', eltern: 'In Gruppensituationen mit schnellem Gesprächswechsel fällt es deinem Kind schwer mitzuhalten, obwohl es sich sprachlich sehr differenziert ausdrücken kann.', fach: 'In Gruppensituationen mit schnellem Gesprächswechsel fällt es dem Kind schwer mitzuhalten, obwohl es sich sprachlich sehr differenziert ausdrücken kann.' },
+
+    { domain: 'hb', eltern: 'Dein Kind stellt für sein Alter ungewöhnlich tiefgehende Fragen, zum Beispiel zu Leben, Tod oder Gerechtigkeit.', fach: 'Das Kind stellt für sein Alter ungewöhnlich tiefgehende Fragen, zum Beispiel zu Leben, Tod oder Gerechtigkeit.' },
+    { domain: 'hb', eltern: 'Bei manchen Aufgaben findet dein Kind einen eigenen, ungewöhnlichen Lösungsweg, der am Ende trotzdem zum richtigen Ergebnis führt.', fach: 'Bei manchen Aufgaben findet das Kind einen eigenen, ungewöhnlichen Lösungsweg, der am Ende trotzdem zum richtigen Ergebnis führt.' },
+    { domain: 'hb', eltern: 'Alltägliche Rückschläge, zum Beispiel ein verlorenes Brettspiel, lösen bei deinem Kind eine überraschend große Frustration aus, obwohl es in anderen Bereichen kognitiv weit voraus wirkt.', fach: 'Alltägliche Rückschläge, zum Beispiel ein verlorenes Brettspiel, lösen bei dem Kind eine überraschend große Frustration aus, obwohl es in anderen Bereichen kognitiv weit voraus wirkt.' },
+    { domain: 'hb', eltern: 'Dein Kind hat einen fast unstillbaren Wissensdurst zu bestimmten Themen und will diese bis ins Detail durchdringen.', fach: 'Das Kind hat einen fast unstillbaren Wissensdurst zu bestimmten Themen und will diese bis ins Detail durchdringen.' },
+    { domain: 'hb', eltern: 'In der Kita oder Schule zeigt dein Kind deutlich weniger, als du ihm eigentlich zutraust.', fach: 'In der Kita oder Schule zeigt das Kind deutlich weniger, als du ihm eigentlich zutraust.' },
+    { domain: 'hb', eltern: 'Wenn dein Kind mit einer für es passenden, anspruchsvollen Beschäftigung beschäftigt ist, verschwindet Unruhe oder Ablenkbarkeit fast vollständig.', fach: 'Wenn das Kind mit einer für es passenden, anspruchsvollen Beschäftigung beschäftigt ist, verschwindet Unruhe oder Ablenkbarkeit fast vollständig.' }
+  ];
+
+  var SCALE = [
+    { value: 0, label: 'Trifft nicht zu' },
+    { value: 1, label: 'Trifft selten zu' },
+    { value: 2, label: 'Trifft teilweise zu' },
+    { value: 3, label: 'Trifft häufig zu' },
+    { value: 4, label: 'Trifft eindeutig zu' }
+  ];
+
+  var COPY = {
+    eltern: {
+      eyebrow: 'Orientierungstest &middot; ADHS &middot; Autismus-Spektrum &middot; Hochbegabung',
+      headline: 'Fällt dein Kind ins neurodivergente Spektrum?',
+      lede: 'Dieser Selbsttest ist ein Orientierungsangebot des Instituts für Neurokompetenz. Er zeigt dir, ob es sich lohnen könnte, genauer hinzuschauen, ob dein Kind ins neurodivergente Spektrum fallen könnte, zum Beispiel in Richtung ADHS, Autismus-Spektrum oder Hochbegabung. Beantworte die folgenden 18 Fragen so ehrlich und spontan wie möglich, es gibt keine richtigen oder falschen Antworten.',
+      resultHeadline: 'Dein Ergebnis',
+      bands: {
+        low: 'Aktuell zeigen sich bei den abgefragten Aspekten eher wenige Auffälligkeiten.',
+        mid: 'Einzelne der abgefragten Merkmale zeigen sich bei deinem Kind. Ein genauerer, fachlicher Blick kann sich lohnen.',
+        high: 'Mehrere der abgefragten Merkmale zeigen sich bei deinem Kind deutlich. Vieles spricht dafür, das Profil deines Kindes gemeinsam mit einer Fachperson genauer anzuschauen.'
+      },
+      resultDisclaimer: 'Dieses Ergebnis ist eine Orientierung, keine Diagnose. Es zeigt, wie viele der typischen Beobachtungen aus unserer fachlichen Arbeit auf dein Kind zutreffen, mehr nicht. Ob dein Kind tatsächlich ins neurodivergente Spektrum fällt, kann ausschließlich eine fachärztliche, psychologische oder sonderpädagogische Abklärung feststellen.',
+      cta: 'Erfahre beim kostenfreien Infoabend, wie du dein Kind neurokompetent begleitest, ganz gleich, wie dein Ergebnis ausgefallen ist.'
+    },
+    fach: {
+      eyebrow: 'Orientierungstest &middot; ADHS &middot; Autismus-Spektrum &middot; Hochbegabung',
+      headline: 'Fällt das Kind, das du begleitest, ins neurodivergente Spektrum?',
+      lede: 'Dieser Selbsttest ist ein Orientierungsangebot des Instituts für Neurokompetenz. Er zeigt dir, ob es sich lohnen könnte, genauer hinzuschauen, ob das Kind, das du begleitest, ins neurodivergente Spektrum fallen könnte, zum Beispiel in Richtung ADHS, Autismus-Spektrum oder Hochbegabung. Beantworte die folgenden 18 Fragen mit Blick auf dieses eine Kind, so ehrlich und spontan wie möglich, es gibt keine richtigen oder falschen Antworten.',
+      resultHeadline: 'Das Ergebnis',
+      bands: {
+        low: 'Aktuell zeigen sich bei den abgefragten Aspekten eher wenige Auffälligkeiten.',
+        mid: 'Einzelne der abgefragten Merkmale zeigen sich bei diesem Kind. Ein genauerer, fachlicher Blick kann sich lohnen.',
+        high: 'Mehrere der abgefragten Merkmale zeigen sich bei diesem Kind deutlich. Vieles spricht dafür, das Profil gemeinsam mit einer Fachperson oder den Eltern genauer anzuschauen.'
+      },
+      resultDisclaimer: 'Dieses Ergebnis ist eine Orientierung, keine Diagnose. Es zeigt, wie viele der typischen Beobachtungen aus unserer fachlichen Arbeit auf dieses Kind zutreffen, mehr nicht. Ob das Kind tatsächlich ins neurodivergente Spektrum fällt, kann ausschließlich eine fachärztliche, psychologische oder sonderpädagogische Abklärung feststellen.',
+      cta: 'In unserem kostenfreien Infoabend und in der Ausbildung zur Fachberaterin Neurokompetenz gehen wir mit dir noch weiter in die Tiefe.'
+    }
+  };
+
+  var DOMAIN_META = {
+    adhs: { label: 'ADHS', color: 'var(--petrol)' },
+    ass: { label: 'Autismus-Spektrum', color: 'var(--mint)' },
+    hb: { label: 'Hochbegabung', color: 'var(--sage)' }
+  };
+
+  var state = { mode: 'eltern', index: -1, answers: new Array(QUESTIONS.length).fill(null) };
+
+  var el = {
+    screenIntro: document.getElementById('screen-intro'),
+    screenQuiz: document.getElementById('screen-quiz'),
+    screenResult: document.getElementById('screen-result'),
+    modeEltern: document.getElementById('mode-eltern'),
+    modeFach: document.getElementById('mode-fach'),
+    introEyebrow: document.getElementById('intro-eyebrow'),
+    introHeadline: document.getElementById('intro-headline'),
+    introLede: document.getElementById('intro-lede'),
+    startBtn: document.getElementById('start-btn'),
+    progressFill: document.getElementById('progress-fill'),
+    progressLabel: document.getElementById('progress-label'),
+    questionNum: document.getElementById('question-num'),
+    questionText: document.getElementById('question-text'),
+    answers: document.getElementById('answers'),
+    backBtn: document.getElementById('back-btn'),
+    bandBadge: document.getElementById('band-badge'),
+    resultHeadline: document.getElementById('result-headline'),
+    resultText: document.getElementById('result-text'),
+    chart: document.getElementById('chart'),
+    resultDisclaimer: document.getElementById('result-disclaimer'),
+    ctaText: document.getElementById('cta-text'),
+    restartBtn: document.getElementById('restart-btn')
+  };
+
+  function renderIntro() {
+    var c = COPY[state.mode];
+    el.introEyebrow.innerHTML = c.eyebrow;
+    el.introHeadline.textContent = c.headline;
+    el.introLede.textContent = c.lede;
+    el.modeEltern.classList.toggle('active', state.mode === 'eltern');
+    el.modeFach.classList.toggle('active', state.mode === 'fach');
+  }
+
+  function showScreen(name) {
+    el.screenIntro.hidden = name !== 'intro';
+    el.screenQuiz.hidden = name !== 'quiz';
+    el.screenResult.hidden = name !== 'result';
+  }
+
+  function renderQuestion() {
+    var i = state.index;
+    var q = QUESTIONS[i];
+    var pct = (i / QUESTIONS.length) * 100;
+    el.progressFill.style.width = pct + '%';
+    el.progressLabel.textContent = 'Frage ' + (i + 1) + ' von ' + QUESTIONS.length;
+    el.questionNum.textContent = String(i + 1).padStart(2, '0');
+    el.questionText.textContent = q[state.mode];
+
+    el.answers.innerHTML = '';
+    SCALE.forEach(function (opt) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'answer' + (state.answers[i] === opt.value ? ' selected' : '');
+      btn.innerHTML = '<span class="dot" aria-hidden="true"></span><span>' + opt.label + '</span>';
+      btn.addEventListener('click', function () { selectAnswer(opt.value); });
+      el.answers.appendChild(btn);
+    });
+
+    el.backBtn.style.visibility = i === 0 ? 'hidden' : 'visible';
+  }
+
+  function selectAnswer(value) {
+    state.answers[state.index] = value;
+    renderQuestion();
+    window.setTimeout(function () {
+      if (state.index < QUESTIONS.length - 1) {
+        state.index += 1;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }, 260);
+  }
+
+  function showResult() {
+    var totals = { adhs: 0, ass: 0, hb: 0 };
+    var total = 0;
+    QUESTIONS.forEach(function (q, i) {
+      var v = state.answers[i] || 0;
+      totals[q.domain] += v;
+      total += v;
+    });
+
+    var band = total <= 17 ? 'low' : (total <= 35 ? 'mid' : 'high');
+    var c = COPY[state.mode];
+
+    el.bandBadge.className = 'band-badge band-' + band;
+    el.bandBadge.textContent = band === 'low' ? 'Wenige Hinweise' : (band === 'mid' ? 'Einzelne Hinweise' : 'Deutliche Hinweise');
+    el.resultHeadline.textContent = c.resultHeadline;
+    el.resultText.textContent = c.bands[band];
+    el.resultDisclaimer.innerHTML = '<strong>Wichtig zu wissen:</strong> ' + c.resultDisclaimer;
+    el.ctaText.textContent = c.cta;
+
+    el.chart.innerHTML = '';
+    Object.keys(DOMAIN_META).forEach(function (key) {
+      var meta = DOMAIN_META[key];
+      var score = totals[key];
+      var pct = Math.round((score / 24) * 100);
+      var row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML =
+        '<span class="bar-label">' + meta.label + '</span>' +
+        '<span class="bar-track"><span class="bar-fill" style="width:0%;background:' + meta.color + '"><span class="bar-pct">' + pct + '%</span></span></span>' +
+        '<span class="bar-value">' + score + '/24</span>';
+      el.chart.appendChild(row);
+      window.setTimeout((function (r, p) {
+        return function () {
+          var fill = r.querySelector('.bar-fill');
+          fill.style.width = p + '%';
+          fill.style.minWidth = '46px';
+        };
+      })(row, pct), 60);
+    });
+
+    showScreen('result');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  el.modeEltern.addEventListener('click', function () { state.mode = 'eltern'; renderIntro(); });
+  el.modeFach.addEventListener('click', function () { state.mode = 'fach'; renderIntro(); });
+
+  el.startBtn.addEventListener('click', function () {
+    state.index = 0;
+    state.answers = new Array(QUESTIONS.length).fill(null);
+    showScreen('quiz');
+    renderQuestion();
+  });
+
+  el.backBtn.addEventListener('click', function () {
+    if (state.index > 0) {
+      state.index -= 1;
+      renderQuestion();
+    }
+  });
+
+  el.restartBtn.addEventListener('click', function () {
+    state.index = -1;
+    state.answers = new Array(QUESTIONS.length).fill(null);
+    showScreen('intro');
+    renderIntro();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  renderIntro();
+  showScreen('intro');
+})();
+</script>
+</body>
+</html>
