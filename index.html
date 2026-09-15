@@ -345,60 +345,55 @@
   .band-mid { background: #E4F4EF; color: #1F6B58; }
   .band-high { background: #E7EDF4; color: var(--blue); }
 
-  .chart { margin: 28px 0 8px; display: flex; flex-direction: column; gap: 16px; }
-  .bar-row { display: grid; grid-template-columns: 132px 1fr 46px; align-items: center; gap: 12px; }
-  .bar-label {
+  .gauge-wrap {
+    position: relative;
+    width: 188px;
+    height: 188px;
+    margin: 22px auto 4px;
+  }
+  .gauge-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .gauge-track { fill: none; stroke: var(--track); stroke-width: 14; }
+  .gauge-progress {
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-dasharray: 439.8;
+    stroke-dashoffset: 439.8;
+    transition: stroke-dashoffset 900ms cubic-bezier(.2,.8,.2,1), stroke 300ms ease;
+  }
+  .gauge-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .gauge-pct {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: var(--text);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .gauge-caption {
     font-family: var(--font-head);
     font-weight: 600;
-    font-size: 0.82rem;
-    color: var(--text);
-  }
-  .bar-track {
-    display: block;
-    height: 22px;
-    border-radius: 999px;
-    background: var(--track);
-    overflow: hidden;
-  }
-  .bar-fill {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    min-width: 0;
-    border-radius: 999px;
-    width: 0%;
-    padding-right: 8px;
-    transition: width 700ms cubic-bezier(.2,.8,.2,1), min-width 700ms cubic-bezier(.2,.8,.2,1);
-  }
-  .bar-pct {
-    color: #fff;
-    font-family: var(--font-head);
-    font-weight: 800;
     font-size: 0.66rem;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 6px;
   }
-  .bar-value {
-    font-family: var(--font-head);
-    font-variant-numeric: tabular-nums;
-    font-weight: 700;
+  .gauge-basis {
+    text-align: center;
     font-size: 0.82rem;
+    line-height: 1.5;
     color: var(--text-muted);
-    text-align: right;
-  }
-  .chart-axis {
-    display: grid;
-    grid-template-columns: 132px 1fr 46px;
-    gap: 12px;
-    margin-top: 2px;
-  }
-  .chart-axis .ticks {
-    display: flex; justify-content: space-between;
-    font-family: var(--font-head);
-    font-size: 0.68rem;
-    color: var(--text-muted);
+    margin: 0 0 6px;
   }
 
   .cta-box {
@@ -512,14 +507,19 @@
       <h1 id="result-headline">Dein Ergebnis</h1>
       <p class="lede" id="result-text"></p>
 
-      <div class="chart" id="chart"></div>
-      <div class="chart-axis">
-        <span></span>
-        <span class="ticks"><span>0</span><span>12</span><span>24</span></span>
-        <span></span>
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 160 160" aria-hidden="true">
+          <circle class="gauge-track" cx="80" cy="80" r="70"></circle>
+          <circle class="gauge-progress" id="gauge-progress" cx="80" cy="80" r="70"></circle>
+        </svg>
+        <div class="gauge-center">
+          <div class="gauge-pct" id="gauge-pct">0%</div>
+          <div class="gauge-caption">Neurodivergenz</div>
+        </div>
       </div>
+      <p class="gauge-basis" id="gauge-basis"></p>
 
-      <div class="disclaimer" style="margin-top:26px;">
+      <div class="disclaimer" style="margin-top:10px;">
         <span class="icon">&#9432;</span>
         <p id="result-disclaimer"></p>
       </div>
@@ -583,8 +583,9 @@
         mid: 'Einzelne der abgefragten Merkmale zeigen sich bei deinem Kind. Ein genauerer, fachlicher Blick kann sich lohnen.',
         high: 'Mehrere der abgefragten Merkmale zeigen sich bei deinem Kind deutlich. Vieles spricht dafür, das Profil deines Kindes gemeinsam mit einer Fachperson genauer anzuschauen.'
       },
-      resultDisclaimer: 'Dieses Ergebnis ist eine Orientierung, keine Diagnose. Es zeigt, wie viele der typischen Beobachtungen aus unserer fachlichen Arbeit auf dein Kind zutreffen, mehr nicht. Ob dein Kind tatsächlich ins neurodivergente Spektrum fällt, kann ausschließlich eine fachärztliche, psychologische oder sonderpädagogische Abklärung feststellen.',
-      cta: 'Erfahre beim kostenfreien Infoabend, wie du dein Kind neurokompetent begleitest, ganz gleich, wie dein Ergebnis ausgefallen ist.'
+      resultDisclaimer: 'Diese Prozentzahl ist eine Orientierung, keine Diagnose. Sie zeigt, wie viele der typischen Beobachtungen aus unserer fachlichen Arbeit auf dein Kind zutreffen, mehr nicht. Ob dein Kind tatsächlich ins neurodivergente Spektrum fällt, kann ausschließlich eine fachärztliche, psychologische oder sonderpädagogische Abklärung feststellen.',
+      cta: 'Erfahre beim kostenfreien Infoabend, wie du dein Kind neurokompetent begleitest, ganz gleich, wie dein Ergebnis ausgefallen ist.',
+      basis: 'Basierend auf 18 Aussagen zu typischen Merkmalen aus den Bereichen ADHS, Autismus-Spektrum und Hochbegabung.'
     },
     fach: {
       eyebrow: 'Orientierungstest &middot; ADHS &middot; Autismus-Spektrum &middot; Hochbegabung',
@@ -596,16 +597,14 @@
         mid: 'Einzelne der abgefragten Merkmale zeigen sich bei diesem Kind. Ein genauerer, fachlicher Blick kann sich lohnen.',
         high: 'Mehrere der abgefragten Merkmale zeigen sich bei diesem Kind deutlich. Vieles spricht dafür, das Profil gemeinsam mit einer Fachperson oder den Eltern genauer anzuschauen.'
       },
-      resultDisclaimer: 'Dieses Ergebnis ist eine Orientierung, keine Diagnose. Es zeigt, wie viele der typischen Beobachtungen aus unserer fachlichen Arbeit auf dieses Kind zutreffen, mehr nicht. Ob das Kind tatsächlich ins neurodivergente Spektrum fällt, kann ausschließlich eine fachärztliche, psychologische oder sonderpädagogische Abklärung feststellen.',
-      cta: 'In unserem kostenfreien Infoabend und in der Ausbildung zur Fachberaterin Neurokompetenz gehen wir mit dir noch weiter in die Tiefe.'
+      resultDisclaimer: 'Diese Prozentzahl ist eine Orientierung, keine Diagnose. Sie zeigt, wie viele der typischen Beobachtungen aus unserer fachlichen Arbeit auf dieses Kind zutreffen, mehr nicht. Ob das Kind tatsächlich ins neurodivergente Spektrum fällt, kann ausschließlich eine fachärztliche, psychologische oder sonderpädagogische Abklärung feststellen.',
+      cta: 'In unserem kostenfreien Infoabend und in der Ausbildung zur Fachberaterin Neurokompetenz gehen wir mit dir noch weiter in die Tiefe.',
+      basis: 'Basierend auf 18 Aussagen zu typischen Merkmalen aus den Bereichen ADHS, Autismus-Spektrum und Hochbegabung.'
     }
   };
 
-  var DOMAIN_META = {
-    adhs: { label: 'ADHS', color: 'var(--petrol)' },
-    ass: { label: 'Autismus-Spektrum', color: 'var(--mint)' },
-    hb: { label: 'Hochbegabung', color: 'var(--sage)' }
-  };
+  var BAND_COLOR = { low: 'var(--sage)', mid: 'var(--mint)', high: 'var(--blue)' };
+  var GAUGE_CIRCUMFERENCE = 2 * Math.PI * 70;
 
   var state = { mode: 'eltern', index: -1, answers: new Array(QUESTIONS.length).fill(null) };
 
@@ -628,7 +627,9 @@
     bandBadge: document.getElementById('band-badge'),
     resultHeadline: document.getElementById('result-headline'),
     resultText: document.getElementById('result-text'),
-    chart: document.getElementById('chart'),
+    gaugeProgress: document.getElementById('gauge-progress'),
+    gaugePct: document.getElementById('gauge-pct'),
+    gaugeBasis: document.getElementById('gauge-basis'),
     resultDisclaimer: document.getElementById('result-disclaimer'),
     ctaText: document.getElementById('cta-text'),
     restartBtn: document.getElementById('restart-btn')
@@ -685,13 +686,12 @@
   }
 
   function showResult() {
-    var totals = { adhs: 0, ass: 0, hb: 0 };
     var total = 0;
     QUESTIONS.forEach(function (q, i) {
-      var v = state.answers[i] || 0;
-      totals[q.domain] += v;
-      total += v;
+      total += state.answers[i] || 0;
     });
+    var maxTotal = QUESTIONS.length * 4;
+    var pct = Math.round((total / maxTotal) * 100);
 
     var band = total <= 17 ? 'low' : (total <= 35 ? 'mid' : 'high');
     var c = COPY[state.mode];
@@ -702,27 +702,15 @@
     el.resultText.textContent = c.bands[band];
     el.resultDisclaimer.innerHTML = '<strong>Wichtig zu wissen:</strong> ' + c.resultDisclaimer;
     el.ctaText.textContent = c.cta;
+    el.gaugeBasis.textContent = c.basis;
 
-    el.chart.innerHTML = '';
-    Object.keys(DOMAIN_META).forEach(function (key) {
-      var meta = DOMAIN_META[key];
-      var score = totals[key];
-      var pct = Math.round((score / 24) * 100);
-      var row = document.createElement('div');
-      row.className = 'bar-row';
-      row.innerHTML =
-        '<span class="bar-label">' + meta.label + '</span>' +
-        '<span class="bar-track"><span class="bar-fill" style="width:0%;background:' + meta.color + '"><span class="bar-pct">' + pct + '%</span></span></span>' +
-        '<span class="bar-value">' + score + '/24</span>';
-      el.chart.appendChild(row);
-      window.setTimeout((function (r, p) {
-        return function () {
-          var fill = r.querySelector('.bar-fill');
-          fill.style.width = p + '%';
-          fill.style.minWidth = '46px';
-        };
-      })(row, pct), 60);
-    });
+    el.gaugeProgress.style.stroke = BAND_COLOR[band];
+    el.gaugePct.textContent = '0%';
+    el.gaugeProgress.style.strokeDashoffset = GAUGE_CIRCUMFERENCE;
+    window.setTimeout(function () {
+      el.gaugeProgress.style.strokeDashoffset = GAUGE_CIRCUMFERENCE - (pct / 100) * GAUGE_CIRCUMFERENCE;
+      el.gaugePct.textContent = pct + '%';
+    }, 60);
 
     showScreen('result');
     window.scrollTo({ top: 0, behavior: 'smooth' });
