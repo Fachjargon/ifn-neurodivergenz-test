@@ -393,29 +393,134 @@
     font-size: 0.82rem;
     line-height: 1.5;
     color: var(--text-muted);
-    margin: 0 0 6px;
+    margin: 0 0 18px;
   }
 
-  .cta-box {
-    margin-top: 28px;
-    background: var(--surface-alt);
-    border-radius: 16px;
-    padding: 22px;
+  .scale-block { margin: 0 0 22px; }
+  .scale-track {
+    position: relative;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+    display: flex;
+    margin-top: 34px;
   }
-  .cta-box .eyebrow { color: var(--blue); }
-  .cta-box h3 {
+  .scale-seg { flex: 1; }
+  .scale-seg:nth-child(1) { background: var(--sage); }
+  .scale-seg:nth-child(2) { background: var(--mint); }
+  .scale-seg:nth-child(3) { background: var(--petrol); }
+  .scale-seg:nth-child(4) { background: var(--blue); }
+  .scale-marker {
+    position: absolute;
+    top: -30px;
+    left: 0%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: left 900ms cubic-bezier(.2,.8,.2,1);
+  }
+  .scale-marker .pill {
+    background: var(--text);
+    color: var(--surface);
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.64rem;
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .scale-marker .stem { width: 2px; height: 10px; background: var(--text); margin-top: 1px; }
+  .scale-quarters {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 8px;
+    gap: 4px;
+  }
+  .scale-quarters div { text-align: center; font-size: 0.66rem; color: var(--text-muted); line-height: 1.4; }
+  .scale-quarters strong {
+    display: block;
+    color: var(--text);
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+
+  .explain-box {
+    display: flex;
+    gap: 14px;
+    background: var(--surface-alt);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 0 0 12px;
+  }
+  .explain-box .icon-wrap {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1.05rem;
+  }
+  .explain-box h4 { font-family: var(--font-head); font-weight: 800; font-size: 0.95rem; color: var(--text); margin: 0 0 6px; }
+  .explain-box p { margin: 0; font-size: 0.86rem; line-height: 1.55; color: var(--text-muted); }
+
+  .section-heading {
     font-family: var(--font-head);
     font-weight: 800;
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     color: var(--text);
-    margin: 0 0 6px;
+    margin: 30px 0 4px;
   }
-  .cta-box p {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.55;
-    margin: 0 0 16px;
+  .section-sub { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 14px; }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 8px;
   }
+  .profile-card { background: var(--surface-alt); border-radius: 14px; padding: 16px; }
+  .profile-card .p-label { font-family: var(--font-head); font-weight: 700; font-size: 0.82rem; color: var(--text); margin-bottom: 4px; }
+  .profile-card .p-pct {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  .profile-track { height: 6px; border-radius: 999px; background: var(--border); overflow: hidden; margin-bottom: 10px; }
+  .profile-fill { display: block; height: 100%; border-radius: 999px; width: 0%; transition: width 700ms cubic-bezier(.2,.8,.2,1); }
+  .profile-desc { font-size: 0.76rem; line-height: 1.5; color: var(--text-muted); }
+
+  .next-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+  .next-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface-alt);
+    border-radius: 14px;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-family: inherit;
+  }
+  .next-card.primary { background: var(--blue); }
+  .next-text { display: flex; flex-direction: column; gap: 2px; }
+  .next-card.primary .next-title, .next-card.primary .next-desc { color: #fff; }
+  .next-card .next-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1.05rem;
+  }
+  .next-card.primary .next-icon { background: rgba(255,255,255,.18); }
+  .next-title { font-family: var(--font-head); font-weight: 700; font-size: 0.92rem; color: var(--text); }
+  .next-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+  .next-arrow { margin-left: auto; color: var(--text-muted); font-size: 1.1rem; flex-shrink: 0; }
+  .next-card.primary .next-arrow { color: #fff; }
 
   .restart-row { text-align: center; margin-top: 22px; }
   .restart-row button {
@@ -519,17 +624,41 @@
       </div>
       <p class="gauge-basis" id="gauge-basis"></p>
 
-      <div class="disclaimer" style="margin-top:10px;">
+      <div class="scale-block">
+        <div class="scale-track">
+          <span class="scale-seg"></span><span class="scale-seg"></span><span class="scale-seg"></span><span class="scale-seg"></span>
+          <div class="scale-marker" id="scale-marker">
+            <span class="pill">Dein Ergebnis</span>
+            <span class="stem"></span>
+          </div>
+        </div>
+        <div class="scale-quarters">
+          <div><strong>bis 25 %</strong>eher neurotypisch</div>
+          <div><strong>26 bis 50 %</strong>mögliche Tendenz</div>
+          <div><strong>51 bis 75 %</strong>erhöhte Wahrscheinlichkeit</div>
+          <div><strong>ab 76 %</strong>hohe Wahrscheinlichkeit</div>
+        </div>
+      </div>
+
+      <div class="explain-box">
+        <span class="icon-wrap">&#128161;</span>
+        <div>
+          <h4>Was bedeutet das konkret?</h4>
+          <p id="explain-text"></p>
+        </div>
+      </div>
+
+      <div class="disclaimer">
         <span class="icon">&#9432;</span>
         <p id="result-disclaimer"></p>
       </div>
 
-      <div class="cta-box">
-        <p class="eyebrow">Kostenfreier Infoabend</p>
-        <h3>Sonntag, 13.9. &middot; 20 Uhr &middot; Online</h3>
-        <p id="cta-text">Erfahre, wie du Hochbegabung, ADHS und Autismus-Spektrum erkennst und neurokompetent begleitest.</p>
-        <button class="btn btn-primary" onclick="window.open('https://neurokompetenz.org', '_blank')">Zum Infoabend anmelden</button>
-      </div>
+      <h3 class="section-heading">Dein Profil auf einen Blick</h3>
+      <p class="section-sub" id="profile-sub">Deine Antworten zeigen besonders häufig Hinweise in folgenden Bereichen:</p>
+      <div class="profile-grid" id="profile-grid"></div>
+
+      <h3 class="section-heading">Empfohlene nächste Schritte</h3>
+      <div class="next-grid" id="next-grid"></div>
 
       <div class="restart-row">
         <button id="restart-btn">Test erneut starten</button>
@@ -584,8 +713,21 @@
         high: 'Mehrere der abgefragten Merkmale zeigen sich bei deinem Kind deutlich. Vieles spricht dafür, das Profil deines Kindes gemeinsam mit einer Fachperson genauer anzuschauen.'
       },
       resultDisclaimer: 'Diese Prozentzahl ist eine Orientierung, keine Diagnose. Sie zeigt, wie viele der typischen Beobachtungen aus unserer fachlichen Arbeit auf dein Kind zutreffen, mehr nicht. Ob dein Kind tatsächlich ins neurodivergente Spektrum fällt, kann ausschließlich eine fachärztliche, psychologische oder sonderpädagogische Abklärung feststellen.',
-      cta: 'Erfahre beim kostenfreien Infoabend, wie du dein Kind neurokompetent begleitest, ganz gleich, wie dein Ergebnis ausgefallen ist.',
-      basis: 'Basierend auf 18 Aussagen zu typischen Merkmalen aus den Bereichen ADHS, Autismus-Spektrum und Hochbegabung.'
+      basis: 'Basierend auf 18 Aussagen zu typischen Merkmalen aus den Bereichen ADHS, Autismus-Spektrum und Hochbegabung.',
+      explain: {
+        low: 'Dein Ergebnis von {{PCT}} % liegt im unteren Bereich. Aktuell zeigen sich bei den abgefragten Aspekten eher wenige der typischen Hinweise, die wir in unserer fachlichen Arbeit häufig beobachten.',
+        mid: 'Dein Ergebnis von {{PCT}} % liegt im Bereich einer möglichen Tendenz. Einzelne deiner Antworten weisen auf Merkmale hin, wie sie bei neurodivergenten Kindern häufiger vorkommen. Das ist kein Befund, sondern ein Hinweis, der einen genaueren Blick lohnen kann.',
+        high: 'Dein Ergebnis von {{PCT}} % liegt im Bereich einer erhöhten bis hohen Wahrscheinlichkeit. Mehrere deiner Antworten weisen deutlich auf Merkmale hin, wie sie bei neurodivergenten Kindern häufiger vorkommen. Das ist kein Befund, aber ein guter Anlass, das Profil deines Kindes gemeinsam mit einer Fachperson genauer anzuschauen.'
+      },
+      profile: {
+        adhs: { label: 'Aufmerksamkeit & Selbstregulation', color: 'var(--petrol)', desc: 'Hinweise auf Konzentration, Impulssteuerung und den Umgang mit Übergängen.' },
+        ass: { label: 'Reizverarbeitung & Routinen', color: 'var(--mint)', desc: 'Hinweise auf eine intensivere Wahrnehmung von Reizen und ein Bedürfnis nach Struktur.' },
+        hb: { label: 'Denken & Lernen', color: 'var(--sage)', desc: 'Hinweise auf ungewöhnliche Denkwege und einen ausgeprägten Wissensdurst.' }
+      },
+      next: [
+        { icon: '&#128197;', title: 'Kostenfreier Infoabend', desc: 'Sonntag, 13.9. &middot; 20 Uhr &middot; Online', href: 'https://neurokompetenz.org', primary: true },
+        { icon: '&#127760;', title: 'Mehr über Neurokompetenz erfahren', desc: 'Hintergrundwissen und Angebote auf unserer Website', href: 'https://neurokompetenz.org', primary: false }
+      ]
     },
     fach: {
       eyebrow: 'Orientierungstest &middot; ADHS &middot; Autismus-Spektrum &middot; Hochbegabung',
@@ -598,8 +740,21 @@
         high: 'Mehrere der abgefragten Merkmale zeigen sich bei diesem Kind deutlich. Vieles spricht dafür, das Profil gemeinsam mit einer Fachperson oder den Eltern genauer anzuschauen.'
       },
       resultDisclaimer: 'Diese Prozentzahl ist eine Orientierung, keine Diagnose. Sie zeigt, wie viele der typischen Beobachtungen aus unserer fachlichen Arbeit auf dieses Kind zutreffen, mehr nicht. Ob das Kind tatsächlich ins neurodivergente Spektrum fällt, kann ausschließlich eine fachärztliche, psychologische oder sonderpädagogische Abklärung feststellen.',
-      cta: 'In unserem kostenfreien Infoabend und in der Ausbildung zur Fachberaterin Neurokompetenz gehen wir mit dir noch weiter in die Tiefe.',
-      basis: 'Basierend auf 18 Aussagen zu typischen Merkmalen aus den Bereichen ADHS, Autismus-Spektrum und Hochbegabung.'
+      basis: 'Basierend auf 18 Aussagen zu typischen Merkmalen aus den Bereichen ADHS, Autismus-Spektrum und Hochbegabung.',
+      explain: {
+        low: 'Dieses Ergebnis von {{PCT}} % liegt im unteren Bereich. Aktuell zeigen sich bei den abgefragten Aspekten eher wenige der typischen Hinweise, die wir in unserer fachlichen Arbeit häufig beobachten.',
+        mid: 'Dieses Ergebnis von {{PCT}} % liegt im Bereich einer möglichen Tendenz. Einzelne Antworten weisen auf Merkmale hin, wie sie bei neurodivergenten Kindern häufiger vorkommen. Das ist kein Befund, sondern ein Hinweis, der einen genaueren Blick lohnen kann.',
+        high: 'Dieses Ergebnis von {{PCT}} % liegt im Bereich einer erhöhten bis hohen Wahrscheinlichkeit. Mehrere Antworten weisen deutlich auf Merkmale hin, wie sie bei neurodivergenten Kindern häufiger vorkommen. Das ist kein Befund, aber ein guter Anlass, das Profil gemeinsam mit einer Fachperson oder den Eltern genauer anzuschauen.'
+      },
+      profile: {
+        adhs: { label: 'Aufmerksamkeit & Selbstregulation', color: 'var(--petrol)', desc: 'Hinweise auf Konzentration, Impulssteuerung und den Umgang mit Übergängen.' },
+        ass: { label: 'Reizverarbeitung & Routinen', color: 'var(--mint)', desc: 'Hinweise auf eine intensivere Wahrnehmung von Reizen und ein Bedürfnis nach Struktur.' },
+        hb: { label: 'Denken & Lernen', color: 'var(--sage)', desc: 'Hinweise auf ungewöhnliche Denkwege und einen ausgeprägten Wissensdurst.' }
+      },
+      next: [
+        { icon: '&#128197;', title: 'Kostenfreier Infoabend', desc: 'Sonntag, 13.9. &middot; 20 Uhr &middot; Online', href: 'https://neurokompetenz.org', primary: true },
+        { icon: '&#127891;', title: 'Ausbildung zur Fachberaterin Neurokompetenz', desc: 'Vertiefe dein Wissen und deine Kompetenz im Berufsalltag', href: 'https://neurokompetenz.org', primary: false }
+      ]
     }
   };
 
@@ -630,8 +785,12 @@
     gaugeProgress: document.getElementById('gauge-progress'),
     gaugePct: document.getElementById('gauge-pct'),
     gaugeBasis: document.getElementById('gauge-basis'),
+    scaleMarker: document.getElementById('scale-marker'),
+    explainText: document.getElementById('explain-text'),
     resultDisclaimer: document.getElementById('result-disclaimer'),
-    ctaText: document.getElementById('cta-text'),
+    profileSub: document.getElementById('profile-sub'),
+    profileGrid: document.getElementById('profile-grid'),
+    nextGrid: document.getElementById('next-grid'),
     restartBtn: document.getElementById('restart-btn')
   };
 
@@ -686,9 +845,12 @@
   }
 
   function showResult() {
+    var totals = { adhs: 0, ass: 0, hb: 0 };
     var total = 0;
     QUESTIONS.forEach(function (q, i) {
-      total += state.answers[i] || 0;
+      var v = state.answers[i] || 0;
+      totals[q.domain] += v;
+      total += v;
     });
     var maxTotal = QUESTIONS.length * 4;
     var pct = Math.round((total / maxTotal) * 100);
@@ -701,16 +863,49 @@
     el.resultHeadline.textContent = c.resultHeadline;
     el.resultText.textContent = c.bands[band];
     el.resultDisclaimer.innerHTML = '<strong>Wichtig zu wissen:</strong> ' + c.resultDisclaimer;
-    el.ctaText.textContent = c.cta;
     el.gaugeBasis.textContent = c.basis;
+    el.explainText.textContent = c.explain[band].replace('{{PCT}}', pct);
 
     el.gaugeProgress.style.stroke = BAND_COLOR[band];
     el.gaugePct.textContent = '0%';
     el.gaugeProgress.style.strokeDashoffset = GAUGE_CIRCUMFERENCE;
+    el.scaleMarker.style.left = '0%';
     window.setTimeout(function () {
       el.gaugeProgress.style.strokeDashoffset = GAUGE_CIRCUMFERENCE - (pct / 100) * GAUGE_CIRCUMFERENCE;
       el.gaugePct.textContent = pct + '%';
+      el.scaleMarker.style.left = Math.min(96, Math.max(4, pct)) + '%';
     }, 60);
+
+    el.profileGrid.innerHTML = '';
+    Object.keys(c.profile).forEach(function (key) {
+      var p = c.profile[key];
+      var score = totals[key];
+      var domainPct = Math.round((score / 24) * 100);
+      var card = document.createElement('div');
+      card.className = 'profile-card';
+      card.innerHTML =
+        '<div class="p-label">' + p.label + '</div>' +
+        '<div class="p-pct">' + domainPct + '%</div>' +
+        '<span class="profile-track"><span class="profile-fill" style="width:0%;background:' + p.color + '"></span></span>' +
+        '<div class="profile-desc">' + p.desc + '</div>';
+      el.profileGrid.appendChild(card);
+      window.setTimeout((function (r, w) {
+        return function () { r.querySelector('.profile-fill').style.width = w + '%'; };
+      })(card, domainPct), 60);
+    });
+
+    el.nextGrid.innerHTML = '';
+    c.next.forEach(function (step) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'next-card' + (step.primary ? ' primary' : '');
+      btn.innerHTML =
+        '<span class="next-icon">' + step.icon + '</span>' +
+        '<span class="next-text"><span class="next-title">' + step.title + '</span><span class="next-desc">' + step.desc + '</span></span>' +
+        '<span class="next-arrow">&#8594;</span>';
+      btn.addEventListener('click', function () { window.open(step.href, '_blank'); });
+      el.nextGrid.appendChild(btn);
+    });
 
     showScreen('result');
     window.scrollTo({ top: 0, behavior: 'smooth' });
